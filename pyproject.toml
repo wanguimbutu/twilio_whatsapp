@@ -1,9 +1,9 @@
 [project]
 name = "twilio_whatsapp"
 authors = [
-    { name = "wangui", email = "wanguimbutu@gmail.com"}
+    { name = "wangui", email = "wangui.work@gmail.com"}
 ]
-description = "Custom whatsapp integration -client specific"
+description = "twilio whatsapp"
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]

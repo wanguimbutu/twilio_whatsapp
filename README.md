@@ -1,6 +1,6 @@
-### Twilio Whatsapp
+### twilio whatsapp
 
-Custom whatsapp integration -client specific
+twilio whatsapp
 
 ### Installation
 

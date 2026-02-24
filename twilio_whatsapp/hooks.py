@@ -1,8 +1,8 @@
 app_name = "twilio_whatsapp"
-app_title = "Twilio Whatsapp"
+app_title = "twilio whatsapp"
 app_publisher = "wangui"
-app_description = "Custom whatsapp integration -client specific"
-app_email = "wanguimbutu@gmail.com"
+app_description = "twilio whatsapp"
+app_email = "wangui.work@gmail.com"
 app_license = "mit"
 
 # Apps
@@ -15,7 +15,7 @@ app_license = "mit"
 # 	{
 # 		"name": "twilio_whatsapp",
 # 		"logo": "/assets/twilio_whatsapp/logo.png",
-# 		"title": "Twilio Whatsapp",
+# 		"title": "twilio whatsapp",
 # 		"route": "/twilio_whatsapp",
 # 		"has_permission": "twilio_whatsapp.api.permission.has_app_permission"
 # 	}
