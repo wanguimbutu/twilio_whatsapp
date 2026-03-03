@@ -148,24 +148,18 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"twilio_whatsapp.tasks.all"
-# 	],
-# 	"daily": [
-# 		"twilio_whatsapp.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"twilio_whatsapp.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"twilio_whatsapp.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"twilio_whatsapp.tasks.monthly"
-# 	],
-# }
-
+scheduler_events = {
+    "cron": {
+        # Outstanding debts report to all sales persons — Wednesday and Saturday at 10pm
+        "0 22 * * 3,6": [
+            "twilio_whatsapp.utils.sales_report.send_all_sales_person_reports"
+        ],
+        # Customer statements — 1st of every month at 9am
+        "0 9 1 * *": [
+            "twilio_whatsapp.utils.statement.send_bulk_statements"
+        ],
+    }
+}
 # Testing
 # -------
 

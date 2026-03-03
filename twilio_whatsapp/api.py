@@ -5,10 +5,41 @@ from requests.auth import HTTPBasicAuth
 
 
 def get_twilio_settings():
-    settings = frappe.get_single("Twilio WhatsApp Settings")
+    settings = frappe.get_single("Twilio Whatsapp Settings")
     if not settings.enabled:
         frappe.throw("Twilio WhatsApp is not enabled")
     return settings
+
+
+def format_phone(number):
+    """
+    Format phone number to international format.
+    Handles Kenyan numbers without country code.
+    """
+    if not number:
+        frappe.throw("Phone number is required")
+
+    # Remove spaces, dashes, brackets
+    number = number.strip().replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
+
+    # Already has + prefix
+    if number.startswith("+"):
+        return number
+
+    # Kenyan number starting with 07 or 01
+    if number.startswith("07") or number.startswith("01"):
+        return f"+254{number[1:]}"
+
+    # Kenyan number starting with 7 or 1 (9 digits)
+    if len(number) == 9 and (number.startswith("7") or number.startswith("1")):
+        return f"+254{number}"
+
+    # Starts with 254 but no +
+    if number.startswith("254"):
+        return f"+{number}"
+
+    # Fallback — return as-is with +
+    return f"+{number}"
 
 
 @frappe.whitelist()
@@ -17,7 +48,7 @@ def send_whatsapp_message(to, body=None, content_sid=None, content_variables=Non
     Send a WhatsApp message via Twilio.
 
     Args:
-        to: Phone number with country code (e.g., +25476XXXX326)
+        to: Phone number (e.g., +254768140326, 0768140326, 768140326)
         body: Free-form text (for session messages)
         content_sid: Twilio Content Template SID (for template messages)
         content_variables: JSON string of template variables
@@ -26,6 +57,8 @@ def send_whatsapp_message(to, body=None, content_sid=None, content_variables=Non
     settings = get_twilio_settings()
     account_sid = settings.account_sid
     auth_token = settings.get_password("auth_token")
+
+    to = format_phone(to)
 
     url = f"https://api.twilio.com/2010-04-01/Accounts/{account_sid}/Messages.json"
 

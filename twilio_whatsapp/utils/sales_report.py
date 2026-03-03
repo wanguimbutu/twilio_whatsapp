@@ -96,12 +96,11 @@ def send_all_sales_person_reports():
         SELECT
             sp.name as sales_person,
             sp.sales_person_name,
-            COALESCE(emp.cell_phone, emp.company_phone) as phone
+            sp.custom_phone_number as phone
         FROM `tabSales Person` sp
-        LEFT JOIN `tabEmployee` emp ON sp.employee = emp.name
         WHERE sp.enabled = 1
-            AND (emp.cell_phone IS NOT NULL AND emp.cell_phone != ''
-                 OR emp.company_phone IS NOT NULL AND emp.company_phone != '')
+            AND sp.custom_phone_number IS NOT NULL
+            AND sp.custom_phone_number != ''
     """, as_dict=True)
 
     results = []
